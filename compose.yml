@@ -47,7 +47,7 @@ services:
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         # Traefik service that listens to HTTPS
         - traefik.webservice.frontend.entryPoints=https
-        - traefik.frontend.auth.basic.users=${ADMIN_USER}:${HASHED_PASSWORD}
+        - ${TRAEFIK_BASIC_AUTH}
 
   unsee:
     image: cloudflare/unsee:v0.8.0
@@ -69,5 +69,5 @@ services:
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         # Traefik service that listens to HTTPS
         - traefik.webservice.frontend.entryPoints=https
-        - traefik.frontend.auth.basic.users=${ADMIN_USER}:${HASHED_PASSWORD}
+        - ${TRAEFIK_BASIC_AUTH}
  
