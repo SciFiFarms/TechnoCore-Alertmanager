@@ -37,9 +37,11 @@ services:
         reservations:
           memory: 64M
       labels:
-        - traefik.frontend.rule=Host:alertmanager.${DOMAIN}
-        - traefik.enable=true
+        - traefik.frontend.rule=$ALERTMANAGER_ROUTING_LABEL
+        - traefik.frontend.priority=$ALERTMANAGER_ROUTING_LABEL_PRIORITY
         - traefik.port=9093
+        - ${TRAEFIK_BASIC_AUTH}
+        - traefik.enable=true
         - traefik.tags=ingress
         - traefik.docker.network=${STACK_NAME:-technocore}_alertmanager
         # Traefik service that listens to HTTP
@@ -47,7 +49,6 @@ services:
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         # Traefik service that listens to HTTPS
         - traefik.webservice.frontend.entryPoints=https
-        - ${TRAEFIK_BASIC_AUTH}
 
   unsee:
     image: cloudflare/unsee:v0.8.0
@@ -59,7 +60,9 @@ services:
       mode: replicated
       replicas: 1
       labels:
-        - traefik.frontend.rule=Host:unsee.${DOMAIN}
+        - traefik.frontend.rule=$UNSEE_ROUTING_LABEL
+        - traefik.frontend.priority=$UNSEE_ROUTING_LABEL_PRIORITY
+        - ${TRAEFIK_BASIC_AUTH}
         - traefik.enable=true
         - traefik.port=8080
         - traefik.tags=ingress
@@ -69,5 +72,4 @@ services:
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         # Traefik service that listens to HTTPS
         - traefik.webservice.frontend.entryPoints=https
-        - ${TRAEFIK_BASIC_AUTH}
  
