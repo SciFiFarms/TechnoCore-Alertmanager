@@ -37,6 +37,7 @@ services:
         reservations:
           memory: 64M
       labels:
+        - com.ouroboros.enable=true
         - traefik.frontend.rule=$ALERTMANAGER_ROUTING_LABEL
         - traefik.frontend.priority=$ALERTMANAGER_ROUTING_LABEL_PRIORITY
         - traefik.port=9093
@@ -60,6 +61,7 @@ services:
       mode: replicated
       replicas: 1
       labels:
+        - com.ouroboros.enable=true
         - traefik.frontend.rule=$UNSEE_ROUTING_LABEL
         - traefik.frontend.priority=$UNSEE_ROUTING_LABEL_PRIORITY
         - ${TRAEFIK_BASIC_AUTH}
